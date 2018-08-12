@@ -271,6 +271,3 @@ const Register = ({ version }) => {
   );
 }
 ``` 
-
-### Rendered View
-![Register Component DynamicForm rendering](https://imgur.com/rPHWDYX.jpg)
