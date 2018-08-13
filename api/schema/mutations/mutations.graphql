@@ -1,0 +1,2 @@
+# import * from './admin/admin_mutations.graphql'
+# import * from './user/user_mutations.graphql'

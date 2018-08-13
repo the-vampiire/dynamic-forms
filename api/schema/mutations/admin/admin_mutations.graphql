@@ -1,0 +1,2 @@
+# import Mutation.* from './form_create/form_create_mutation.graphql'
+# import Mutation.* from './question_create/question_create_mutation.graphql'
