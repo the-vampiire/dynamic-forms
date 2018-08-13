@@ -1,0 +1,11 @@
+# import Question from '../../types/question/question.graphql'
+# import QuestionInputTypeEnum from '../../enums/question_input_type_enum.graphql' 
+# import QuestionTagEnum from '../../enums/question_tag_enum.graphql'
+
+type Query {
+  Questions(
+    input_type: QuestionInputTypeEnum
+    tags: [QuestionTagEnum!]
+    exact_match: Boolean
+  ): [Question!]!
+}
