@@ -28,13 +28,11 @@ const api = new ApolloServer({
 api.applyMiddleware({ app });
 
 // -- MONGO -- //
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('Connected to database');
-    const PORT = process.env.PORT || 8008;
-    app.listen(PORT, () => console.log(`listening on ${PORT}`));        
-  })
-  .catch((err) => {
-    console.error(err.message);
-    process.exit(1);
-  });
+mongoose.connect(
+  process.env.MONGO_URI,
+  (err) => console.log(err || 'Connected to database'),
+);
+
+
+const PORT = process.env.PORT || 8008;
+app.listen(PORT, () => console.log(`listening on ${PORT}`));
