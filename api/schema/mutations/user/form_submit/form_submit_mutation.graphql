@@ -1,0 +1,11 @@
+# import FormResponse from '../../../types/form_response/form_response.graphql'
+# import FormPurposeEnum from '../../../enums/form_purpose_enum.graphql'
+# import JSON from '../../../scalars/json/json.graphql'
+
+type Mutation {
+  Form_Submit(
+    purpose: FormPurposeEnum!,
+    version: Int,
+    form_data: JSON! # gets validated by dynamic model
+  ): FormResponse!
+}
