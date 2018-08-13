@@ -3,10 +3,16 @@ const { importSchema } = require('graphql-import');
 const { merge } = require('lodash');
 const { join } = require('path');
 
-const Query = require('./queries');
-const Mutation = require('./mutations');
+const QueryResolvers = require('./queries');
+const MutationResolvers = require('./mutations');
+const TypeResolvers = require('./types');
 
-const resolvers = merge(Query, Mutation);
+const resolvers = merge(
+  QueryResolvers,
+  MutationResolvers,
+  TypeResolvers,
+);
+
 const typeDefs = importSchema(
   join(__dirname, 'schema.graphql'),
 );
