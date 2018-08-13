@@ -9,10 +9,10 @@ import Error from '../Error';
 import DynamicFormContainer from "./components";
 
 const dynamicFormQuery = gql`
-  query getDynamicForm(
+  query DynamicForm(
     $purpose:FormPurposeEnum!
     $version:Int){
-    form(
+    Form(
       purpose:$purpose
       version: $version
     ) {
@@ -47,8 +47,8 @@ export default (
       ({ data, loading, error }) => {
         if (loading) return <Loader />;
         if (error) return <Error error={error.message} />;
-        if (data.form) {
-          const { form: { purpose, version, questions } } = data;
+        if (data.Form) {
+          const { Form: { purpose, version, questions } } = data;
           return (
             <DynamicFormContainer
               purpose={purpose}

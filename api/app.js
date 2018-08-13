@@ -14,12 +14,12 @@ app.use(cors(corsConfig));
 
 // -- GRAPHQL -- //
 const schema = require('./schema');
-const { models, exampleUser } = require('./models');
+const { models, mockUser } = require('./models');
 
 const api = new ApolloServer({
   schema,
   context: {
-    user: exampleUser,
+    user: mockUser,
     models,
   },
   formatError,

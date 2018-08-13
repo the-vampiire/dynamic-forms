@@ -4,6 +4,5 @@
 type User {
   id: ID!
   username: String!
-  avatar: String!
   form_responses(purpose: FormPurposeEnum!): [FormResponse!]!
 }
