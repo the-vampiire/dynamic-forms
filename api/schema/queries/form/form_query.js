@@ -14,7 +14,7 @@ module.exports = {
         .find({ purpose })
         .sort({ version: -1 })
         .limit(1);
-
+        
       return latest_version[0];
     },
   },
