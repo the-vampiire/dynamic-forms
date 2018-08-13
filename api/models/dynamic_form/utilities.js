@@ -8,6 +8,7 @@ const mapFieldType = (schema) => {
     String: String,
     Date: Date,
     Boolean: Boolean,
+    ObjectId: mongoose.Schema.Types.ObjectId,
   };
 
   const mappedSchema = { ...schema };
@@ -56,7 +57,7 @@ const getSchemaBase = (purpose) => {
       enum: purposes,
     },
     user_id: {
-      type: 'Number',
+      type: 'ObjectId', // change to 'Number' for SQL relationships
       required: true,
     },
   };

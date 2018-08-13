@@ -1,6 +1,3 @@
 enum FormPurposeEnum {
-  chingu_application
-  voyage_application
-  new_voyage_user
-  unassigned
+  example
 }

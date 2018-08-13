@@ -3,4 +3,5 @@ enum QuestionSchemaTypeEnum {
   String
   Date
   Boolean
+  ObjectId
 }
