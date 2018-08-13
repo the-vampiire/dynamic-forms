@@ -5,7 +5,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const { ApolloServer } = require('apollo-server-express');
 
-const { corsConfig, formatError } = require('./config');
+const { corsConfig } = require('./config');
+const { formatError, getAuthedUser } = require('./utilities');
 
 const app = express();
 
@@ -14,14 +15,16 @@ app.use(cors(corsConfig));
 
 // -- GRAPHQL -- //
 const schema = require('./schema');
-const { models, mockUser } = require('./models');
+const models = require('./models');
 
 const api = new ApolloServer({
   schema,
-  context: {
-    user: mockUser,
+  context: async (
+    { req: { headers: { authorization } } },
+  ) => ({
+    user: await getAuthedUser(authorization),
     models,
-  },
+  }),
   formatError,
 });
 

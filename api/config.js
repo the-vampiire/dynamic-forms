@@ -8,12 +8,6 @@ const corsConfig = {
   optionsSuccessStatus: 200,
 };
 
-const formatError = (error) => {
-  if (process.env.NODE_ENV === 'development') console.error(error);
-  return error;
-};
-
 module.exports = {
   corsConfig,
-  formatError,
 };
