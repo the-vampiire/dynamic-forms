@@ -1,0 +1,9 @@
+# import FormPurposeEnum from '../../enums/form_purpose_enum.graphql'
+# import UserFormResponse from '../user_form_response/user_form_response.graphql'
+
+type FormResponse {
+    id: ID!
+    purpose: FormPurposeEnum!
+    version: Int!
+    responses: [UserFormResponse!]!
+}
