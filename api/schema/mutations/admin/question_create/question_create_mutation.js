@@ -24,7 +24,7 @@ module.exports = {
           ...remaining_data
         },
       },
-      { mongo_models: { DynamicQuestion } },
+      { models: { DynamicQuestion } },
     ) => {
       const schema_data = { ...schema };
       // enforce snake_case for the field_name field (used as field in form schema)

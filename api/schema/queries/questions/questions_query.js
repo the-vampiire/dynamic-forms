@@ -3,7 +3,7 @@ module.exports = {
     Questions: async (
       root,
       { input_type, tags, exact_match },
-      { mongo_models: { DynamicQuestion } },
+      { models: { DynamicQuestion } },
     ) => {
       const query = {};
       // incrementally build up the query object
