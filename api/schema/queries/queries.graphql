@@ -1,0 +1,3 @@
+# import Query.* from './form/form_queries.graphql'
+# import Query.* from './user/user_queries.graphql'
+# import Query.* from './questions/questions_query.graphql'
