@@ -12,7 +12,7 @@ const submitDynamicFormMutation = gql`
     $version: Int
     $form_data: JSON!
   ) {
-    formSubmit(
+    Form_Submit(
       purpose: $purpose,
       version: $version,
       form_data: $form_data
@@ -30,7 +30,7 @@ export default (
       (submitMutation, { loading, error, data }) => {
         if (loading) return <Loading />;
         if (error) return <Error error={error.message} />;
-        if (data) return <Redirect to={submitRedirect || "/profile"} />
+        if (data) return <Redirect to={submitRedirect || "/"} />
         return (
           <button
             className="form-btn"
