@@ -1,5 +1,5 @@
 # Dynamic Forms
-### stack
+### main technologies
 - Apollo Server
 - Apollo Client
 - React-Apollo
@@ -7,7 +7,12 @@
 - React Router DOM
 - Mongoose
 
-# Client-Side
+# User Client
+### Contributors:
+- [@serpient](https://github.com/serpient)
+  - based on a fork of her form input components
+  - using her Loading and Error components
+  - using her awesome component styling
 <hr>
 
 ## Anatomy of Components
