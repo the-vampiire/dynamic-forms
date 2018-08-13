@@ -91,9 +91,4 @@ const createSchema = (questions, purpose) => {
   return schemaWithConstraints(raw_schema, purpose);
 };
 
-module.exports = {
-  createSchema,
-  mapFieldType,
-  getSchemaBase,
-  schemaWithConstraints,
-};
+module.exports = createSchema;

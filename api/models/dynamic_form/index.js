@@ -1,13 +1,7 @@
 const mongoose = require('mongoose');
-const Question = require('./dynamic_question');
+const DynamicQuestion = require('../dynamic_question');
 
-const {
-  createSchema,
-  mapFieldType,
-  getSchemaBase,
-  schemaWithConstraints,
-} = require('./utilities');
-
+const createSchema = require('./utilities');
 const purposes = require('./purpose_enum');
 
 
@@ -36,12 +30,13 @@ const dynamic_form_schema = new mongoose.Schema(dynamic_form_schema_shape);
 
 /**
  * Populates Questions when requested in resolver
+ * maps over the questions array (array of reference oIDs)
+ * to fetch DynamicQuestion data
  */
 dynamic_form_schema
 .methods.getQuestions = async function getQuestions() {
   return Promise.all(
-    // maps over the questions array (array of reference oIDs) to fetch question data
-    this.questions.map(question_id => Question.findOne(question_id)),
+    this.questions.map(question_id => DynamicQuestion.findOne(question_id)),
   );
 };
 
@@ -82,6 +77,6 @@ dynamic_form_schema
 dynamic_form_schema.index({ purpose: 1, version: 1 }, { unique: true });
 
 // -- MODEL -- //
-const dynamicForm = mongoose.model('dynamic_form', dynamic_form_schema);
+const DynamicForm = mongoose.model('dynamic_form', dynamic_form_schema);
 
-module.exports = dynamicForm;
+module.exports = DynamicForm;
