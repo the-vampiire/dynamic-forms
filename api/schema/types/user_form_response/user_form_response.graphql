@@ -1,0 +1,6 @@
+# import Question from '../question/question.graphql'
+
+type UserFormResponse {
+    question: Question!
+    answer: [String!]!
+}

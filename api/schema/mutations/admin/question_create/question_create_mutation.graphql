@@ -1,0 +1,6 @@
+# import QuestionCreateInput from '../../../inputs/question_create_input.graphql'
+# import Question from '../../../types/question/question.graphql'
+
+type Mutation {
+  Question_Create(input: QuestionCreateInput!): Question!
+}

@@ -1,0 +1,16 @@
+# TODO: update question tag enums here (and in dynamic_question.js)
+
+enum QuestionTagEnum {
+  ability
+  accountability
+  availability
+  character
+  challenge
+  cohort
+  commitment
+  communication
+  identifier
+  personal
+  teamwork
+  user
+}

@@ -1,0 +1,17 @@
+# TODO: update question input type enum here and dynamic_question.js
+
+enum QuestionInputTypeEnum {
+  checkbox
+  checkbox_2_column
+  date
+  dropdown
+  dropdown_multiple
+  email
+  hidden
+  radio
+  radio_special_badge
+  text
+  textarea
+  url
+}
+

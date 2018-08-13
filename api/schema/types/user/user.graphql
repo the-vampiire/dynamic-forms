@@ -1,0 +1,9 @@
+# import FormResponse from '../form_response/form_response.graphql'
+# import FormPurposeEnum from '../../enums/form_purpose_enum.graphql'
+
+type User {
+  id: ID!
+  username: String!
+  avatar: String!
+  form_responses(purpose: FormPurposeEnum!): [FormResponse!]!
+}

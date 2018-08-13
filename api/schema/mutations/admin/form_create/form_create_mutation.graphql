@@ -1,0 +1,6 @@
+# import FormCreateInput from '../../../inputs/form_create_input.graphql'
+# import Form from '../../../types/form/form.graphql'
+
+type Mutation {
+  Form_Create(input: FormCreateInput!): Form!
+}

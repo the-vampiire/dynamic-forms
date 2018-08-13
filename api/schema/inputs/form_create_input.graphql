@@ -1,0 +1,7 @@
+# import FormPurposeEnum from '../enums/form_purpose_enum.graphql'
+
+input FormCreateInput {
+  purpose: FormPurposeEnum!
+  notes: String
+  questions: [ID!]!
+}

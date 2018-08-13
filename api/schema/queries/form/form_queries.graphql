@@ -1,0 +1,7 @@
+# import Form from '../../types/form/form.graphql'
+# import FormPurposeEnum from '../../enums/form_purpose_enum.graphql'
+
+type Query {
+  Form(purpose: FormPurposeEnum! version: Int ): Form
+  Forms(purpose: FormPurposeEnum! versions:[Int!]): [Form!]!
+}

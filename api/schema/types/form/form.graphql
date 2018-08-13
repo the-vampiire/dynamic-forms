@@ -1,0 +1,10 @@
+# import Question from '../question/question.graphql'
+# import FormPurposeEnum from '../../enums/form_purpose_enum.graphql'
+
+type Form {
+  id: ID!
+  purpose: FormPurposeEnum!
+  version: Int!
+  notes: String
+  questions: [Question!]!
+}

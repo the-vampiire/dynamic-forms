@@ -1,0 +1,13 @@
+# import QuestionInputTypeEnum from '../enums/question_input_type_enum.graphql'
+# import SchemaDataInput from './question_schema_data_input.graphql'
+# import QuestionTagEnum from '../enums/question_tag_enum.graphql'
+
+input QuestionCreateInput {
+  field_name: String!
+  text: String!
+  subtext: String
+  input_type: QuestionInputTypeEnum!
+  schema_data: SchemaDataInput!
+  options: [String!]
+  tags: [QuestionTagEnum!]
+}
