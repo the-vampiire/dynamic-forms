@@ -38,7 +38,7 @@ const App = () => (
       }
     />
 
-    <Route
+    {/* <Route
       exact path="/form/hidden/:version?"
       render={
         ({ match: { params: { version } } }) => (
@@ -47,7 +47,7 @@ const App = () => (
           />
         )
       }
-    />
+    /> */}
   </Switch>
 );
 
