@@ -1,7 +1,11 @@
 const { User } = require('./models');
 
+// TODO: improve error handling
 const formatError = (error) => {
-  if (process.env.NODE_ENV === 'development') console.error(error);
+  if (
+    process.env.NODE_ENV &&
+    process.env.NODE_ENV === 'development'
+  ) console.error(error);
   return error;
 };
 

@@ -20,6 +20,7 @@
     "graphql-type-json": "^0.2.1",
     "lodash": "^4.17.10",
     "mongoose": "^5.2.7",
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.3",
+    "validator": "^10.5.0"
   }
 }
