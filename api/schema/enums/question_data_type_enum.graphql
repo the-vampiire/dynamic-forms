@@ -1,0 +1,8 @@
+enum QuestionDataTypeEnum {
+  Number
+  String
+# currently unsupported
+  # Date
+  # Boolean
+  # ObjectId
+}
