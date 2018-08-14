@@ -7,7 +7,7 @@ const dynamic_question_schema_shape = {
     unique: true,
   }, // name of field in document build from dynamic form
 
-  text: { // for responses and as 'label' in builder data
+  text: { // 'question' text used as 'label' in input component
     type: String,
     required: true,
   },
@@ -17,6 +17,22 @@ const dynamic_question_schema_shape = {
   options: {
     type: [{ type: String }],
   },
+
+  data_type: {
+    type: String,
+    enum: [
+      'String',
+      'Number',
+      'Date',
+      'Boolean',
+      'ObjectId',
+    ],
+    default: 'String',
+  },
+
+  minlength: Number,
+
+  maxlength: Number,
 
   input_type: {
     type: String,
@@ -34,13 +50,6 @@ const dynamic_question_schema_shape = {
     ],
   },
 
-  schema_data: {
-    // DEV TODO handle custom validators
-      // validate min / max choices for array type?
-    type: {},
-    required: true,
-  },
-
   tags: {
     type: [{ type: String }],
     enum: [ // TODO: update tags here and in question_tag_enum.graphql
@@ -48,8 +57,6 @@ const dynamic_question_schema_shape = {
       'accountability',
       'availability',
       'character',
-      'challenge',
-      'cohort',
       'commitment',
       'communication',
       'identifier',
