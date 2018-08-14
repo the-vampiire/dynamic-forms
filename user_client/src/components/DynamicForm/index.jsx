@@ -4,7 +4,7 @@ import { gql } from "apollo-boost";
 import qs from "query-string";
 
 import './DynamicForm.css';
-import Loader from '../Loading';
+import Loading from '../Loading';
 import Error from '../Error';
 import DynamicFormContainer from "./components";
 
@@ -45,7 +45,7 @@ export default (
   <Query query={dynamicFormQuery} variables={{ purpose, version }}>
     {
       ({ data, loading, error }) => {
-        if (loading) return <Loader />;
+        if (loading) return <Loading />;
         if (error) return <Error error={error.message} />;
         if (data.Form) {
           const { Form: { purpose, version, questions } } = data;
