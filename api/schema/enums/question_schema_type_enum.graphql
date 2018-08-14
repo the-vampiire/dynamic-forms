@@ -1,7 +1,0 @@
-enum QuestionSchemaTypeEnum {
-  Number
-  String
-  Date
-  Boolean
-  ObjectId
-}

@@ -1,9 +1,0 @@
-# import QuestionSchemaTypeEnum from '../../enums/question_schema_type_enum.graphql'
-
-type QuestionSchemaData {
-  type: QuestionSchemaTypeEnum!
-  unique: Boolean
-  required: Boolean
-  minlength: Int
-  maxlength: Int
-}
