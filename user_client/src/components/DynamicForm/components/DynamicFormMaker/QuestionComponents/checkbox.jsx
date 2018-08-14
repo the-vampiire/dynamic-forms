@@ -11,7 +11,7 @@ const CheckboxComponent = (
         name={field_name}
         value={answer}
         id={field_name + '_' + index}
-        checked={form_data[field_name].has(answer)}
+        checked={form_data[field_name].indexOf(answer) !== -1} // is answer in answers array
         onChange={e => onFormChange(e)}
       />
       <span className="checkmark" />
