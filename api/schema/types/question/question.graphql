@@ -1,16 +1,17 @@
 # import QuestionInputTypeEnum from '../../enums/question_input_type_enum.graphql'
+# import QuestionDataTypeEnum from '../../enums/question_data_type_enum.graphql'
 # import QuestionTagEnum from '../../enums/question_tag_enum.graphql'
-# import QuestionSchemaData from '../question_schema_data/question_schema_data.graphql'
+# import IntOrString from '../../scalars/int_or_string/int_or_string.graphql'
 
 type Question {
   id: ID!
   field_name: String!
-  text: String!
-  subtext: String
   input_type: QuestionInputTypeEnum!
-  options: [String!]
+  text: String!
+  subtext: String 
+  options: [IntOrString!]
+  data_type: QuestionDataTypeEnum!
   minlength: Int
   maxlength: Int
-  schema_data: QuestionSchemaData!
   tags: [QuestionTagEnum!]
 }
