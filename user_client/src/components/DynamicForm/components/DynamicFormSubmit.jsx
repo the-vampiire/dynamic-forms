@@ -22,7 +22,7 @@ const submitDynamicFormMutation = gql`
   }
 `;
 
-export default (
+const DynamicFormSubmit = (
   { onSubmit, submitRedirect, variables },
 ) => (
   <Mutation mutation={submitDynamicFormMutation}>
@@ -48,3 +48,5 @@ export default (
     }
   </Mutation>
 );
+
+export default DynamicFormSubmit;
