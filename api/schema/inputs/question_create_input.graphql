@@ -9,7 +9,7 @@ input QuestionCreateInput {
   text: String!
   subtext: String
   options: [IntOrString!]
-  data_type: QuestionDataTypeEnum!
+  data_type: QuestionDataTypeEnum
   minlength: Int
   maxlength: Int
   tags: [QuestionTagEnum!]

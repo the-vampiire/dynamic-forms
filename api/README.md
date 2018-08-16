@@ -32,7 +32,7 @@ type Question {
   input_type: QuestionInputTypeEnum!
   text: String!
   subtext: String 
-  data_type: QuestionDataTypeEnum
+  data_type: QuestionDataTypeEnum!
   options: [IntOrString!]
   minlength: Int
   maxlength: Int
