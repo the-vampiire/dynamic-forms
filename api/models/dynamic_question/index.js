@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+const input_types = require('./input_types_enum');
+const tags = require('./tags_enum');
+
 const dynamic_question_schema_shape = {
   field_name: {
     type: String,
@@ -36,34 +39,12 @@ const dynamic_question_schema_shape = {
 
   input_type: {
     type: String,
-    enum: [ // TODO: update input types here and question_input_type_enum.graphql
-      'checkbox',
-      'checkbox_2_column',
-      'date',
-      'dropdown',
-      'email',
-      'hidden',
-      'radio',
-      'text',
-      'textarea',
-      'url',
-    ],
+    enum: input_types,
   },
 
   tags: {
     type: [{ type: String }],
-    enum: [ // TODO: update tags here and in question_tag_enum.graphql
-      'ability',
-      'accountability',
-      'availability',
-      'character',
-      'commitment',
-      'communication',
-      'identifier',
-      'personal',
-      'teamwork',
-      'user',
-    ],
+    enum: tags,
     index: true, // add index for searching
   },
 };
