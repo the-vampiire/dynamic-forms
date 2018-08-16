@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -7,6 +6,7 @@ const { ApolloServer } = require('apollo-server-express');
 
 const { corsConfig } = require('./config');
 const { formatError, getAuthedUser } = require('./utilities');
+const DEV = process.env.NODE_ENV === 'DEVELOPMENT';
 
 const app = express();
 
@@ -33,9 +33,21 @@ api.applyMiddleware({ app });
 // -- MONGO -- //
 mongoose.connect(
   process.env.MONGO_URI,
-  (err) => console.log(err || 'Connected to database'),
+  { useNewUrlParser: true },
+  ({ error: message }) => (
+    DEV
+      ? console.log(message || 'Connected to database')
+      : null
+  ),
 );
 
 
 const PORT = process.env.PORT || 8008;
-app.listen(PORT, () => console.log(`listening on ${PORT}`));
+app.listen(
+  PORT,
+  () => (
+    DEV
+      ? console.log(`listening on ${PORT}`)
+      : null
+  ),
+);
