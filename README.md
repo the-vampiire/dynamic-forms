@@ -32,8 +32,8 @@ With Dynamic Forms here are your new steps **for all forms and versions**:
 - define a new or existing form `purpose`
   - this is the name of your form and db collection
   - automatic versioning for existing `purpose`
-- create the form from a pool of questions
-  - add new questions to the pool in seconds without writing a line of code
+- create the form from a pool of Questions
+  - add new Questions to the pool in seconds without writing a line of code
 - call the DynamicForm component passing a `purpose` prop
   - optionally a `version` prop (for A/B..Z testing)
   - defaults to latest version
@@ -58,6 +58,11 @@ Yes. That's all. The schema, API, and form view are all generated dynamically.
 <hr>
 
 # How it Works
+## Creation Steps
+- 8/15/18: 3 days into the build
+  - all Question and Form creation steps are done through GraphiQL / Playground
+  - work in progress Dynamic Form Builder GUI [(mockup)](https://i.imgur.com/PaRJpNj.jpg) on the way!
+
 ### 1: add Questions to your Question Pool
 #### Required
 - field name
@@ -66,7 +71,8 @@ Yes. That's all. The schema, API, and form view are all generated dynamically.
   - question text (user facing)
 - input type [Enum]
   - for dynamic generation in React 
-  - checkbox, select, radio, textarea, text, url, email, more to come
+  - checkbox, select, radio, textarea, text, url, email, hidden
+  - more to come!
 
 #### Optional
 - data_type: [Enum] (Int or String currently supported)
@@ -84,26 +90,37 @@ Yes. That's all. The schema, API, and form view are all generated dynamically.
 - tags [[Enum]]
   - customizable tags you can apply for filtering / querying for Questions
 
-- can be done manually through GraphiQL / Playground
-- can use (WIP) Dynamic Form Builder GUI [mockup](https://i.imgur.com/PaRJpNj.jpg)
-
-produces a Question Type
-```js
-type Question {
-  id: ID!
-  field_name: String!
-  input_type: QuestionInputTypeEnum!
-  text: String!
-  subtext: String 
-  data_type: QuestionDataTypeEnum
-  options: [IntOrString!]
-  minlength: Int
-  maxlength: Int
-  tags: [QuestionTagEnum!]
-}
-```
-
 ### 2: Create a Form
+#### Required
+- purpose [Enum]
+  - select a purpose from your `purposes` enum
+  - identifier for a form
+  - version defaults to 0 or auto increment on new forms for existing purpose
+- questions
+  - array of Question oID from Questions collection
+
+### Optional
+- notes
+  - Admin notes describing a new form or version
+  - for keeping track of form goals / outcomes and historical context
+
+## Usage
+
+### Client-Side
+#### uses the DynamicForm component
+- must pass `purpose` prop
+- `version` prop is optional
+  - if no version is passed the most recent version is used by default
+- if a hidden field value is missing a console error is written listing the field for easier debugging
+
+- can be called directly (contains minimal styling)
+  - hidden field data passed through `queryString` prop as needed
+
+- can be called from a wrapper component (**preferred**)
+  - for adding a custom title
+  - for additional styling
+  - for injecting hidden field data from the wrapper component
+    - can pass hidden field data from `hiddenData` and / or `queryString` props 
 
 
 
