@@ -19,12 +19,12 @@
     - new_voyage_user
 - `version` prop is optional
   - if no version is passed the most recent version is used by default
-- if a hidden field value is missing an console error is written listing the field for easier debugging
+- if a hidden field value is missing a console error is written listing the field for easier debugging
 
 ### can be called directly (contains minimal styling)
   - hidden field data passed through `queryString` prop
 
-### can be called from a wrapper class (preferred)
+### can be called from a wrapper component (preferred)
   - for adding a custom title
   - for additional styling
   - for adding hidden field data from the wrapper
