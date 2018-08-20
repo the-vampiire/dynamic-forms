@@ -34,9 +34,9 @@ api.applyMiddleware({ app });
 mongoose.connect(
   process.env.MONGO_URI,
   { useNewUrlParser: true },
-  ({ error: message }) => (
+  (error) => (
     DEV
-      ? console.log(message || 'Connected to database')
+      ? console.log(error || 'Connected to database')
       : null
   ),
 );
