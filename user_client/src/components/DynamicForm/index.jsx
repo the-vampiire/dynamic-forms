@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
 import qs from "query-string";
@@ -7,6 +8,7 @@ import './DynamicForm.css';
 import Loading from '../Loading';
 import Error from '../Error';
 import DynamicFormContainer from "./components";
+import DynamicFormSubmit from "./components/DynamicFormSubmit";
 
 const dynamicFormQuery = gql`
   query DynamicForm(
@@ -33,13 +35,13 @@ const dynamicFormQuery = gql`
   }
 `;
 
-export default (
+const DynamicForm = (
   {
     purpose,
     version,
     hiddenData,
     queryString,
-    submitRedirect,
+    submitComponent,
   },
 ) => (
   <Query query={dynamicFormQuery} variables={{ purpose, version }}>
@@ -54,12 +56,12 @@ export default (
               purpose={purpose}
               version={version}
               questions={questions}
-              submitRedirect={submitRedirect}
               hiddenData={
                 queryString || hiddenData ?
                   Object.assign(hiddenData, qs.parse(queryString)) :
                   null
               }
+              submitComponent={submitComponent}
             />
           );
         }
@@ -72,3 +74,17 @@ export default (
     }
   </Query>
 );
+
+DynamicForm.propTypes = {
+  purpose: PropTypes.string,
+  version: PropTypes.number,
+  hiddenData: PropTypes.object,
+  queryString: PropTypes.string,
+  submitComponent: PropTypes.func,
+};
+
+DynamicForm.defaultProps = {
+  submitComponent: DynamicFormSubmit,
+}
+
+export default DynamicForm;
