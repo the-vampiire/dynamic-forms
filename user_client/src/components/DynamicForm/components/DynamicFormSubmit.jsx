@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
@@ -23,30 +24,49 @@ const submitDynamicFormMutation = gql`
 `;
 
 const DynamicFormSubmit = (
-  { onSubmit, submitRedirect, variables },
+  {
+    mutation,
+    handleSubmit,
+    handleMutate,
+  },
 ) => (
-  <Mutation mutation={submitDynamicFormMutation}>
+  // custom mutation or default to 
+  <Mutation mutation={mutation || submitDynamicFormMutation}>
     {
-      (submitMutation, { loading, error, data }) => {
-        if (loading) return <Loading />;
-        if (error) return <Error error={error.message} />;
-        if (data) return <Redirect to={submitRedirect || "/"} />
+      (submitMutation, mutationStatus) => {
+        if (handleMutate) {
+          handleMutate(mutationStatus); // let parent control data - loading - error
+        } else {
+          // if handleMutate is not passed delegate mutation status handling to
+          // DynamicFormSubmit
+          const { data, loading, error } = mutationStatus;
+          if (loading) return <Loading />;
+          if (error) return <Error error={error.message} />;
+          if (data) return <Redirect to="/" />;
+        }
+      
         return (
-          <button
+          <input
             className="form-btn"
             type="submit"
             value="submit"
-            onClick={(e) => {
-              e.preventDefault();
-              onSubmit(submitMutation, variables);
-            }}
-          >
-            Submit
-          </button>
+            onClick={
+              (e) => {
+                e.preventDefault();
+                handleSubmit(submitMutation);
+              }
+            }
+          />
         );
       }
     }
   </Mutation>
 );
+
+DynamicFormSubmit.propTypes = {
+  handleSubmit: PropTypes.func,
+  handleMutate: PropTypes.func,
+  mutation: PropTypes.string,
+}
 
 export default DynamicFormSubmit;
