@@ -1,4 +1,5 @@
 # Types
+
 ## Form
 #### the `purpose` of the form organizes the Dynamic Form versions and User form response data
 - used as the name of the form response data collection
@@ -15,9 +16,6 @@ type Form {
   questions: [Question!]!
 }
 ```
-#### Query 
-
-<hr>
 
 ## Question
 #### tags are used for filtering Question searches
@@ -39,7 +37,56 @@ type Question {
   tags: [QuestionTagEnum!]
 }
 ```
-### Query: returns the Questions Pool
+
+<hr>
+
+# Queries
+
+## Form
+### returns the corresponding Dynamic Form for Client rendering
+#### Required
+- purpose
+#### Optional
+- version
+  - specific `version` to render
+  - default: latest (highest number) `version`
+```js
+query GetForm(
+  $purpose: FormPurposeEnum!
+  version: Int
+) {
+  Form(
+    purpose $purpose
+    version: $version
+  ) {
+    ... requested fields ...
+  }
+}
+```
+### returns array of Dynamic Forms for given purpose / versions
+- used for reviewing existing `purpose` versions
+  - to see `notes` and / or create a new `version`
+#### Required
+- purpose
+#### Optional
+- versions: array of version numbers
+  - specific `versions` to review
+  - default: latest (highest number) `version`
+```js
+query GetForms(
+  $purpose: FormPurposeEnum!
+  versions: [Int!]
+) {
+  Forms(
+    purpose $purpose
+    versions: $versions
+  ) {
+    ... requested fields ...
+  }
+}
+```
+## Question
+### returns the Questions Pool
 - optional filters (additive):
   - input_type: [Enum]
     - returns Questions of the given `input_type`
@@ -57,10 +104,51 @@ query GetQuestions(
     input_type: $input_type
     tags: $tags
     exact_match: $exact_match
-  ): [Question!]!
+  ) {
+    ...requested fields...
+  }
 }
 ```
-### Mutation: creating a Question
+
+## User form responses
+### returns an array of a single User's responses to the given form `purpose`
+```js
+query GetUserResponses(
+  $purpose: FormPurposeEnum!
+) {
+  User {
+    ... other User fields ...
+
+    form_responses(purpose: $purpose) {
+      ... FormResponse fields ...
+    }
+  }
+}
+```
+
+## Users form responses
+### returns an array of a single User's responses to the given form `purpose`
+```js
+query GetUsersResponses(
+  $purpose: FormPurposeEnum!
+) {
+  Users {
+    ... other User fields ...
+    
+    form_responses(purpose: $purpose) {
+      ... FormResponse fields ...
+    }
+  }
+}
+```
+<hr>
+
+# Mutations
+
+## Form
+
+## Question
+### creating a Question -> returns Question Type
 #### Required
 - field name
   - question identifier (snake_case)
@@ -91,8 +179,8 @@ mutation CreateQuestion(
   $input: QuestionCreateInput!
 ){
   Question_Create(input: $input) {
-    id
+    ... requested fields ...
   }
 }
 ```
-<hr>
+
