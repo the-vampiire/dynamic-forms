@@ -90,6 +90,48 @@ Yes. That's all. The schema, API, and form view are all generated dynamically.
 - tags [[Enum]]
   - customizable tags you can apply for filtering / querying for Questions
 
+Example mutation
+```
+mutation {
+	one:questionCreate(
+    input: {
+      field_name: "project-name"
+      text: "Project Name"
+      input_type:text
+      schema_data: {
+        type:String
+        }
+    }
+  ) {
+    id
+    }
+
+two:questionCreate(
+    input: {
+      field_name: "elevator-pitch"
+      text: "Elevator Pitch"
+      input_type:text
+      schema_data: {
+        type:String
+        }
+    }
+  ) {
+    id
+    }
+```
+Example returned data
+```
+{
+    "data": {
+      "one": {
+        "id": "5b7c6c3afdf18e7150c04d92"
+      },
+      "two": {
+        "id": "5b7c6c3afdf18e7150c04d93"
+      }
+    }
+  }
+```
 ### 2: Create a Form
 #### Required
 - purpose [Enum]
