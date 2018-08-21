@@ -2,19 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import DynamicFormMaker from "./DynamicFormMaker";
-import DynamicFormSubmit from "./DynamicFormSubmit"
 
+/**
+ * @prop {array} questions array of Question data objects for rendering
+ * @prop {string} purpose Dynamic Form purpose
+ * @prop {function} handleSubmit wrapper callback for handling submit behavior
+ */
 class DynamicFormContainer extends React.Component {
   constructor(props) {
     super(props);
     // TODO: handle disabled flag for disabling(rendering) the submit button
     // let questions control a disabled flag in on form change
-    const { purpose, version, questions } = props;
+    const { purpose, questions } = props;
     this.state = {
-      purpose,
-      version,
-      questions,
-      form_data: this._initializeFormData(purpose, questions),
+      form_data: this._initializeFormData(
+        purpose,
+        questions,
+      ),
     }
   }
 
@@ -47,7 +51,10 @@ class DynamicFormContainer extends React.Component {
    * - injects 'hiddenData' values
    */
   _mapFormDataFields = (questions) => questions.reduce(
-    (form_data, { field_name, input_type }) => {
+    (
+      form_data,
+      { field_name, input_type },
+    ) => {
       // creates a Set for multiple answers
       if (this._isMultiAnswer(input_type)) form_data[field_name] = [];
       else form_data[field_name] = '';
@@ -87,6 +94,7 @@ class DynamicFormContainer extends React.Component {
    * - stores current 'form_data' in local storage for persistence
    */
   _onFormChange = ({ currentTarget }) => {
+    // TODO: get 'disabled' attr here to control Submit?
     const { name, value, type } = currentTarget;
     const form_data = { ...this.state.form_data };
 
@@ -104,58 +112,38 @@ class DynamicFormContainer extends React.Component {
   }
 
   /**
-   * Trigger for calling the submitMutation() function
-   * 
-   * - clears local storage
-   * 
-   * - passes 'variables' from state into submitMutation()
-   *  - variables: { purpose, version, form_data }
-   */
-  handleSubmit = (submitMutation) => {
-    // clear LS form persistence on submit
-    window.localStorage.removeItem(this.state.purpose);
-    const { questions, ...variables } = this.state;
-    submitMutation({ variables });
-  }
-
-
-  /**
-   * optional method for custom handling of data - loading - error
-   * 
-   * - provides mutationState object
-   *  - data: response data from mutation
-   *  - loading: boolean state of loading (during req-res)
-   *  - error: error.message contains GraphQL error
-   * - called during each step of the mutation process
-   * - initiated by handleSubmit()
-   */
-  handleMutate = ({ data, loading, error }) => {}
-
-  /**
    * calls DynamicFormMaker()
    * 
    * - creates form Question components for each 'question'
    */
   renderInputs = () => DynamicFormMaker(
-    this.state.questions,
-    this._onFormChange,
+    this.props.questions,
     this.state.form_data,
+    this._onFormChange,
   );
 
-  /**
-   * renders the SubmitComponent
-   * 
-   * - injects handleSubmit()
-   * - injects handleMutate()
-   */
-  renderSubmit = () => this.props.submitComponent({
-    handleSubmit: this.handleSubmit,
-    handleMutate: this.handleMutate,
-  });
+  renderSubmit = () => {
+    const { form_data } = this.state;
+    const { handleSubmit } = this.props;
 
+    return (
+      <input
+        className="form-btn"
+        type="submit"
+        value="Submit"
+        onClick={
+          (e) => {
+            e.preventDefault();
+            handleSubmit(form_data);
+          }
+        }
+      />
+    );
+  };
+  
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form>
         {this.renderInputs()}
         {this.renderSubmit()}
       </form>
@@ -165,14 +153,8 @@ class DynamicFormContainer extends React.Component {
 
 DynamicFormContainer.propTypes = {
   purpose: PropTypes.string,
-  version: PropTypes.number,
-  questions: PropTypes.array,
   hiddenData: PropTypes.object,
-  submitComponent: PropTypes.element,
-};
-
-DynamicFormContainer.defaultProps = {
-  handleMutate: null,
+  questions: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default DynamicFormContainer;
