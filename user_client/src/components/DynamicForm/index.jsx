@@ -7,14 +7,14 @@ import qs from "query-string";
 import './DynamicForm.css';
 import Loading from '../Loading';
 import Error from '../Error';
-import DynamicFormContainer from "./components";
-import DynamicFormSubmit from "./components/DynamicFormSubmit";
+import { client } from "../../";
+import { DynamicFormWrapper } from "./components";
 
 const dynamicFormQuery = gql`
   query DynamicForm(
     $purpose:FormPurposeEnum!
     $version:Int){
-    Form(
+    dynamicFormData: Form(
       purpose:$purpose
       version: $version
     ) {
@@ -35,13 +35,34 @@ const dynamicFormQuery = gql`
   }
 `;
 
+const submitDynamicFormMutation = gql`
+  mutation DynamicFormSubmit(
+    $purpose: FormPurposeEnum!
+    $version: Int
+    $form_data: JSON!
+  ) {
+    Form_Submit(
+      purpose: $purpose,
+      version: $version,
+      form_data: $form_data
+    ) {
+      id
+    }
+  }
+`;
+
+/**
+ * @prop {string} purpose Dynamic Form purpose
+ * @prop {number} version optional Dynamic Form version for given purpose
+ * @prop {object} hiddenData optional object of values for hidden inputs
+ * @prop {string} queryString optional query string data for hidden inputs
+ */
 const DynamicForm = (
   {
     purpose,
     version,
     hiddenData,
     queryString,
-    submitComponent,
   },
 ) => (
   <Query query={dynamicFormQuery} variables={{ purpose, version }}>
@@ -49,19 +70,18 @@ const DynamicForm = (
       ({ data, loading, error }) => {
         if (loading) return <Loading />;
         if (error) return <Error error={error.message} />;
-        if (data.Form) {
-          const { Form: { purpose, version, questions } } = data;
+        if (data.dynamicFormData) {
+          const { dynamicFormData } = data;
           return (
-            <DynamicFormContainer
-              purpose={purpose}
-              version={version}
-              questions={questions}
+            <DynamicFormWrapper
+              client={client}
+              mutation={submitDynamicFormMutation}
               hiddenData={
                 queryString || hiddenData ?
                   Object.assign(hiddenData, qs.parse(queryString)) :
                   null
               }
-              submitComponent={submitComponent}
+              {...dynamicFormData}
             />
           );
         }
@@ -80,11 +100,6 @@ DynamicForm.propTypes = {
   version: PropTypes.number,
   hiddenData: PropTypes.object,
   queryString: PropTypes.string,
-  submitComponent: PropTypes.func,
-};
-
-DynamicForm.defaultProps = {
-  submitComponent: DynamicFormSubmit,
 }
 
 export default DynamicForm;
