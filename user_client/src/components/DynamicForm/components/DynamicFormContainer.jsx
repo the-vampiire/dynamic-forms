@@ -151,10 +151,25 @@ class DynamicFormContainer extends React.Component {
   }
 };
 
+const questionShape = {
+  id: PropTypes.string,
+  text: PropTypes.string,
+  subtext: PropTypes.string,
+  input_type: PropTypes.string,
+  field_name: PropTypes.string,
+  options: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ),
+  minlength: PropTypes.number,
+  maxlength: PropTypes.number,
+  data_type: PropTypes.string,
+  tags: PropTypes.arrayOf(PropTypes.string),
+};
+
 DynamicFormContainer.propTypes = {
   purpose: PropTypes.string,
   hiddenData: PropTypes.object,
-  questions: PropTypes.arrayOf(PropTypes.object),
+  questions: PropTypes.arrayOf(PropTypes.shape(questionShape)),
 };
 
 export default DynamicFormContainer;
