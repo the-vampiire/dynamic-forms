@@ -45,12 +45,13 @@ ORIGINAL PROJECT VARIABLES
 */
 /*
 ==========================
-QUESTION & ANSWER UNIT
+DYNAMIC FORM
 ==========================
 */
-.form-QA {
-  display: block;
-  padding-top: 20px; }
+.dynamic-form {
+  display: flex;
+  padding-top: 20px;
+  justify-content: center; }
 
 /*
 ==========================

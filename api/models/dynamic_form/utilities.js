@@ -57,7 +57,7 @@ const mapValidator = (input_type, minlength) => {
 
   const validators = {
     min_choices: {
-      validator: val => { console.log(val); return val.length >= min},
+      validator: val => val.length >= min,
       message: `At least ${min} choices are required`,
     },
     email: {

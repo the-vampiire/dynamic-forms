@@ -3,8 +3,8 @@ import QuestionComponents from "./QuestionComponents";
 
 export default (
   questions,
-  onFormChange,
   form_data,
+  onFormChange,
 ) => questions.map(
   (question) => {
     const {

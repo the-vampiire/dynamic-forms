@@ -32,6 +32,8 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 
+export { client }
+
 /**
  * Apollo-React Wrapper Components
  * -------------------------------

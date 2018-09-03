@@ -1,3 +1,7 @@
 import DynamicFormContainer from "./DynamicFormContainer";
+import DynamicFormWrapper from "./DynamicFormWrapper";
 
-export default DynamicFormContainer;
+export {
+  DynamicFormContainer,
+  DynamicFormWrapper,
+};
