@@ -53,6 +53,9 @@ DYNAMIC FORM
   padding-top: 20px;
   justify-content: center; }
 
+.form-QA {
+  margin-bottom: 40px; }
+
 /*
 ==========================
 QUESTION
@@ -93,11 +96,34 @@ SUBMIT BUTTON
   text-align: center;
   border: none;
   display: block;
-  box-shadow: 0px 3px 6px #e6e6e6; }
+  box-shadow: 0px 3px 6px #e6e6e6;
+  margin: 0 auto;
+  margin-top: 20px; }
   .form-btn:hover {
     background-color: #19c281; }
 
-.hline {
+.form-btn--disabled {
+  width: 150px;
+  font-size: 14px;
+  background-color: #D9D9D9;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 20px;
+  padding: 10px;
+  letter-spacing: 0.1em;
+  text-align: center;
+  border: none;
+  display: block;
+  box-shadow: 0px 3px 6px #e6e6e6;
+  margin: 0 auto;
+  margin-top: 20px;
+  cursor: pointer;
+  width: 200px; }
+  .form-btn--disabled:hover {
+    background-color: #D9D9D9; }
+
+.hline,
+.form-hline {
   width: calc(100% + 40px);
   margin-left: -20px;
   border-top: 1px solid #efefef;

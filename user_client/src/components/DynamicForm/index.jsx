@@ -1,61 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Query } from "react-apollo";
-import { gql } from "apollo-boost";
-import qs from "query-string";
 
 import './DynamicForm.css';
-import Loading from '../Loading';
+import Loader from '../Loader';
 import Error from '../Error';
 import { client } from "../../";
-import { DynamicFormWrapper } from "./components";
+import dynamicFormQuery from "./dynamicFormQuery";
+import {
+  DynamicFormWrapper,
+  DynamicFormContainer,
+  dynamicFormMaker,
+  questionComponents,
+} from "./components";
 
-const dynamicFormQuery = gql`
-  query DynamicForm(
-    $purpose:FormPurposeEnum!
-    $version:Int){
-    dynamicFormData: Form(
-      purpose:$purpose
-      version: $version
-    ) {
-      id
-      purpose
-      version
-      questions {
-        id
-        field_name
-        text
-        subtext
-        input_type
-        options
-        minlength
-        maxlength
+const parseParams = (queryString) => {
+  const queryParams = new URLSearchParams(queryString);
+  const params = {};
+  for(let entry of queryParams.entries()) {
+    if(entry.length) {
+      if(params[entry[0]]) {
+        if(Array.isArray(params[entry[0]])) {
+          params[entry[0]].push(...entry.slice(1));
+        } else {
+          params[entry[0]] = [params[entry[0]], ...entry.slice(1)];
+        }
+      } else {
+        params[entry[0]] = entry.slice(1).length === 1 ? entry[1] : entry.slice(1);
       }
     }
   }
-`;
-
-const submitDynamicFormMutation = gql`
-  mutation DynamicFormSubmit(
-    $purpose: FormPurposeEnum!
-    $version: Int
-    $form_data: JSON!
-  ) {
-    Form_Submit(
-      purpose: $purpose,
-      version: $version,
-      form_data: $form_data
-    ) {
-      id
-    }
-  }
-`;
+  return params;
+}
 
 /**
- * @prop {string} purpose Dynamic Form purpose
- * @prop {number} version optional Dynamic Form version for given purpose
- * @prop {object} hiddenData optional object of values for hidden inputs
- * @prop {string} queryString optional query string data for hidden inputs
+ * @prop {string} purpose Dynamic Form purpose (collection name)
+ * --- OPTIONAL ---
+ * @prop {number} version Dynamic Form version (defaults to latest)
+ * @prop {object} hiddenData object of values for hidden inputs
+ * @prop {string} queryString query string data for hidden inputs
+ * @prop {func} onValidate custom handler for validating a form field (onChange)
+ * @prop {func} onSubmit custom handler for submitting a form
+ * @prop {func} onResponse custom handler for mutation response data
+ * @prop {func} onError custom handler for mutation error data
  */
 const DynamicForm = (
   {
@@ -63,24 +50,31 @@ const DynamicForm = (
     version,
     hiddenData,
     queryString,
+    onValidate,
+    onSubmit,
+    onResponse,
+    onError,
   },
 ) => (
   <Query query={dynamicFormQuery} variables={{ purpose, version }}>
     {
       ({ data, loading, error }) => {
-        if (loading) return <Loading />;
+        if (loading) return <Loader />;
         if (error) return <Error error={error.message} />;
         if (data.dynamicFormData) {
           const { dynamicFormData } = data;
           return (
             <DynamicFormWrapper
               client={client}
-              mutation={submitDynamicFormMutation}
               hiddenData={
                 queryString || hiddenData ?
-                  Object.assign(hiddenData, qs.parse(queryString)) :
+                  Object.assign(hiddenData, parseParams(queryString)) :
                   null
               }
+              onValidate={onValidate}
+              onSubmit={onSubmit}
+              onResponse={onResponse}
+              onError={onError}
               {...dynamicFormData}
             />
           );
@@ -100,6 +94,23 @@ DynamicForm.propTypes = {
   version: PropTypes.number,
   hiddenData: PropTypes.object,
   queryString: PropTypes.string,
+  onValidate: PropTypes.func,
+  onSubmit: PropTypes.func,
+  onResponse: PropTypes.func,
+  onError: PropTypes.func,
 }
 
-export default DynamicForm;
+DynamicForm.defaultProps = {
+  onValidate: null,
+  onSubmit: null,
+  onResponse: null,
+  onError: null,
+}
+
+export {
+  DynamicForm,
+  DynamicFormWrapper,
+  DynamicFormContainer,
+  dynamicFormMaker,
+  questionComponents,
+};
