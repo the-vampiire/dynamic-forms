@@ -1,10 +1,9 @@
 import React from 'react';
 import { Switch, Route } from "react-router-dom";
 
-import {
-  Landing,
-  DynamicForm
-} from "./components";
+import Landing from "./components/Landing";
+import { DynamicForm } from "./components/DynamicForm";
+
 // TODO: add Header for navigation
 const App = () => (
   <Switch>
